@@ -120,7 +120,7 @@ function initSealEntrance() {
 
       // Stil kennisgewing dat sy die webwerf oopgemaak het
       sendPhoneAlert(
-        "🎨 Canvas Oopgemaak!",
+        "Canvas Oopgemaak!",
         "Lies het pas die NFC tag geskandeer en die canvas oopgemaak! ❤️",
         "art,sparkles",
         "high"
@@ -252,7 +252,7 @@ function initWebhookActions() {
     hugBtn.addEventListener("click", () => {
       spawnHearts(14);
       sendPhoneAlert(
-        "🫂 Drukkie Ontvang!",
+        "Drukkie Ontvang!",
         "Lies het pas vir jou 'n warm drukkie gestuur vanaf die canvas! ❤️",
         "heart,hug",
         "urgent"
@@ -265,7 +265,7 @@ function initWebhookActions() {
     kissBtn.addEventListener("click", () => {
       spawnHearts(14);
       sendPhoneAlert(
-        "💋 Dink aan Jou!",
+        "Dink aan Jou!",
         "Lies dink nou aan jou en stuur baie liefde! 💕",
         "kiss,heart",
         "urgent"
