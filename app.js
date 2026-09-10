@@ -118,10 +118,12 @@ function initSealEntrance() {
       // Begin roulerende aanhalings
       startQuoteRotation();
 
-      // Stil kennisgewing aan Discord dat sy die webwerf oopgemaak het
-      sendDiscordWebhook(
+      // Stil kennisgewing dat sy die webwerf oopgemaak het
+      sendPhoneAlert(
         "🎨 Canvas Oopgemaak!",
-        "Lies het pas die NFC tag geskandeer en die herdenking-blad oopgemaak! ❤️"
+        "Lies het pas die NFC tag geskandeer en die canvas oopgemaak! ❤️",
+        "art,sparkles",
+        "high"
       );
     }, 600);
   });
@@ -240,7 +242,7 @@ function startQuoteRotation() {
 }
 
 // ---------------------------------------------------
-// 6. Discord Kennisgewings & Drukkies
+// 6. Foon Kennisgewings (ntfy.sh & Discord)
 // ---------------------------------------------------
 function initWebhookActions() {
   const hugBtn = document.getElementById("sendHugBtn");
@@ -249,9 +251,11 @@ function initWebhookActions() {
   if (hugBtn) {
     hugBtn.addEventListener("click", () => {
       spawnHearts(14);
-      sendDiscordWebhook(
+      sendPhoneAlert(
         "🫂 Drukkie Ontvang!",
-        "Lies het pas vir jou 'n warm drukkie gestuur vanaf die canvas! ❤️"
+        "Lies het pas vir jou 'n warm drukkie gestuur vanaf die canvas! ❤️",
+        "heart,hug",
+        "urgent"
       );
       showToast("'n Warm drukkie is na Xander gestuur! 🫂❤️", "✨");
     });
@@ -260,52 +264,72 @@ function initWebhookActions() {
   if (kissBtn) {
     kissBtn.addEventListener("click", () => {
       spawnHearts(14);
-      sendDiscordWebhook(
+      sendPhoneAlert(
         "💋 Dink aan Jou!",
-        "Lies dink nou aan jou en stuur baie liefde! 💕"
+        "Lies dink nou aan jou en stuur baie liefde! 💕",
+        "kiss,heart",
+        "urgent"
       );
       showToast("Liefdevolle boodskap is na Xander gestuur! 💕", "💌");
     });
   }
 }
 
-async function sendDiscordWebhook(title, description) {
-  if (!GIFT_CONFIG.discordWebhookUrl || GIFT_CONFIG.discordWebhookUrl.trim() === "") {
-    console.log("Discord Webhook nie ingestel nie. (Gesimuleer:", title, description, ")");
-    return;
-  }
-
+async function sendPhoneAlert(title, description, tags = "heart", priority = "high") {
+  // Prevent spamming (3-second cooldown)
   const now = Date.now();
-  if (now - lastWebhookSent < 4000) {
+  if (now - lastWebhookSent < 3000) {
     return;
   }
   lastWebhookSent = now;
 
-  const payload = {
-    username: "Anniversary Kennisgewing",
-    avatar_url: "https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/2764.png",
-    content: GIFT_CONFIG.discordUserIdToPing ? `<@${GIFT_CONFIG.discordUserIdToPing}>` : undefined,
-    embeds: [
-      {
-        title: title,
-        description: description,
-        color: 16741772, // Roosrooi
-        footer: {
-          text: `Anniversary • ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+  // 1. Stuur onmiddellik na jou foon via ntfy.sh
+  if (GIFT_CONFIG.ntfyTopic && GIFT_CONFIG.ntfyTopic.trim() !== "") {
+    // Verwyder spasies vir URL geldigheid (vervang met koppeltekens)
+    const topic = GIFT_CONFIG.ntfyTopic.trim().replace(/\s+/g, "-");
+    try {
+      fetch(`https://ntfy.sh/${topic}`, {
+        method: "POST",
+        headers: {
+          "Title": title,
+          "Priority": priority,
+          "Tags": tags
         },
-        timestamp: new Date().toISOString()
-      }
-    ]
-  };
+        body: description
+      }).catch(err => console.log("ntfy error:", err));
+    } catch (e) {
+      console.error("ntfy fetch error:", e);
+    }
+  }
 
-  try {
-    await fetch(GIFT_CONFIG.discordWebhookUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-  } catch (err) {
-    console.error("Kon nie webhook stuur nie:", err);
+  // 2. Stuur ook na Discord as die webhook ingestel is
+  if (GIFT_CONFIG.discordWebhookUrl && GIFT_CONFIG.discordWebhookUrl.trim() !== "") {
+    const payload = {
+      username: "Anniversary Kennisgewing",
+      avatar_url: "https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/2764.png",
+      content: GIFT_CONFIG.discordUserIdToPing ? `<@${GIFT_CONFIG.discordUserIdToPing}>` : undefined,
+      embeds: [
+        {
+          title: title,
+          description: description,
+          color: 16741772, // Roosrooi
+          footer: {
+            text: `Anniversary • ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+          },
+          timestamp: new Date().toISOString()
+        }
+      ]
+    };
+
+    try {
+      fetch(GIFT_CONFIG.discordWebhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      }).catch(err => console.log("Discord error:", err));
+    } catch (err) {
+      console.error("Kon nie Discord webhook stuur nie:", err);
+    }
   }
 }
 

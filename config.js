@@ -23,17 +23,16 @@ const GIFT_CONFIG = {
   // ------------------------------------------
   // 🎵 Musiek Instellings
   // ------------------------------------------
-  // Plaaslike MP3: "Pierce The Veil - Karma Police.mp3"
   audioSource: "assets/karma-police.mp3",
 
   // ------------------------------------------
-  // 🔔 Kennisgewings na jou foon (Discord Webhook)
+  // 🔔 Foon Kennisgewings (ntfy.sh)
   // ------------------------------------------
-  // Plak jou Discord Webhook URL hier in:
-  discordWebhookUrl: "",
+  // Jou ntfy onderwerp (gebruik koppeltekens, geen spasies):
+  ntfyTopic: "xander-lisa-drukkies",
 
-  // Opsioneel: Jou Discord Gebruiker ID (bv. "123456789012345678")
-  // As jy dit invul, sal die kennisgewing jou direk @mention sodat jou foon dadelik lui/vibreer!
+  // Opsionele Discord Webhook
+  discordWebhookUrl: "",
   discordUserIdToPing: "",
 
   // ------------------------------------------
