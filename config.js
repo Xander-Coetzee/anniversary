@@ -26,13 +26,10 @@ const GIFT_CONFIG = {
   audioSource: "assets/karma-police.mp3",
 
   // ------------------------------------------
-  // 🔔 Foon Kennisgewings (ntfy.sh)
+  // 🔔 Foon Kennisgewings (Discord Webhook & ntfy.sh)
   // ------------------------------------------
-  // Jou ntfy onderwerp (gebruik koppeltekens, geen spasies):
+  discordWebhookUrl: "https://discord.com/api/webhooks/1547709465342775358/iEgbRMwByxgkoVAvbOB2vXJPBglQRajW_3zWX5rDpT7fAXTDgD1l9eOK2vCWTlQRrbVR",
   ntfyTopic: "xander-lisa-drukkies",
-
-  // Opsionele Discord Webhook
-  discordWebhookUrl: "",
   discordUserIdToPing: "",
 
   // ------------------------------------------
