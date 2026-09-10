@@ -326,7 +326,7 @@ body {
 
 /* Header */
 .header {
-  padding: 26px 20px;
+  padding: 14px 20px;
   text-align: center;
 }
 
@@ -334,30 +334,14 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
-  padding: 7px 18px;
+  font-size: 15px;
+  padding: 8px 22px;
   border-radius: 30px;
   background: rgba(245, 200, 128, 0.18);
   border: 1px solid rgba(245, 200, 128, 0.45);
   color: var(--accent-gold);
   font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.anniversary-since {
-  font-size: 12px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
-}
-
-.title {
-  font-family: 'Cinzel', serif;
-  font-size: 26px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: #fff;
+  margin-bottom: 0;
 }
 
 /* Music Card (Minimalist Vinyl on Repeat) */

@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=2" />
+  <link rel="stylesheet" href="style.css?v=3" />
 </head>
 <body>
 
@@ -64,15 +64,13 @@
     </div>
   </section>
 
-  <!-- 2. Wax Seal Tap-to-Reveal Entrance (Solves iOS audio restrictions) -->
+  <!-- 2. Wax Seal Tap-to-Reveal Entrance -->
   <section id="introScreen" class="intro-screen hidden">
     <div class="intro-card glass-card">
       <div class="wax-seal" id="sealBtn" role="button" aria-label="Maak oop">
         <i class="fa-solid fa-heart seal-icon"></i>
       </div>
       <h1 class="intro-title" id="introTitle">Vir My Engel</h1>
-      <p class="intro-subtitle">Tik om ons herinneringe oop te maak</p>
-      <div class="pulse-hint">Tik die seël ✨</div>
     </div>
   </section>
 
@@ -92,14 +90,11 @@
         <i class="fa-solid fa-infinity"></i>
         <span id="daysCount">--</span> dae saam
       </div>
-      <p class="anniversary-since">Sedert 11 September 2025</p>
-      <h1 class="title">Anniversary</h1>
     </header>
 
-    <!-- Music Player (Looping audio with single play button) -->
+    <!-- Music Player (Karma Police on Repeat) -->
     <section class="music-card glass-card">
       <div class="player-wrapper">
-        <!-- Vinyl Record / Aura Animation -->
         <div class="vinyl-disc" id="vinylDisc">
           <div class="vinyl-grooves"></div>
           <button id="playPauseBtn" class="play-btn" aria-label="Speel of pouseer musiek">
@@ -108,9 +103,6 @@
         </div>
 
         <div class="player-meta">
-          <a id="spotifyDirectLink" href="#" target="_blank" rel="noopener" class="spotify-badge">
-            <i class="fa-brands fa-spotify"></i> Luister op Spotify
-          </a>
           <span class="loop-indicator"><i class="fa-solid fa-repeat"></i> Outomaties op herhaling</span>
         </div>
       </div>
@@ -138,7 +130,7 @@
   </main>
 
   <!-- Scripts -->
-  <script src="config.js?v=2"></script>
-  <script src="app.js?v=2"></script>
+  <script src="config.js?v=3"></script>
+  <script src="app.js?v=3"></script>
 </body>
 </html>

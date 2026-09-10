@@ -150,12 +150,6 @@ function initDaysTogether() {
 function initMusicPlayer() {
   const audio = document.getElementById("bgAudio");
   const playPauseBtn = document.getElementById("playPauseBtn");
-  const spotifyLink = document.getElementById("spotifyDirectLink");
-
-  if (spotifyLink && GIFT_CONFIG.spotifyUrl) {
-    spotifyLink.href = GIFT_CONFIG.spotifyUrl;
-  }
-
   if (audio) {
     audio.loop = true; // Stel altyd op herhaling
     if (GIFT_CONFIG.audioSource) {
@@ -166,12 +160,7 @@ function initMusicPlayer() {
   if (playPauseBtn && audio) {
     playPauseBtn.addEventListener("click", () => {
       if (!audio.src || audio.src === window.location.href) {
-        // Indien geen MP3 beskikbaar nie, stuur na Spotify
-        if (GIFT_CONFIG.spotifyUrl) {
-          window.open(GIFT_CONFIG.spotifyUrl, "_blank");
-        } else {
-          showToast("Voeg 'n klanklêer by in assets/ 🎵", "💡");
-        }
+        showToast("Klanklêer nie gevind nie 🎵", "💡");
         return;
       }
 
@@ -295,6 +284,7 @@ async function sendDiscordWebhook(title, description) {
   const payload = {
     username: "Anniversary Kennisgewing",
     avatar_url: "https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/2764.png",
+    content: GIFT_CONFIG.discordUserIdToPing ? `<@${GIFT_CONFIG.discordUserIdToPing}>` : undefined,
     embeds: [
       {
         title: title,

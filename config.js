@@ -3,7 +3,6 @@
 // ==========================================
 
 const GIFT_CONFIG = {
-  // Name en Titels
   recipientName: "Lies",
   senderName: "Xander",
   websiteTitle: "Anniversary",
@@ -11,7 +10,7 @@ const GIFT_CONFIG = {
   // Ons Spesiale Datum (11 September 2025)
   anniversaryDate: "2025-09-11",
 
-  // Wagwoorde aanvaar (enige van hierdie formate sal werk)
+  // Wagwoorde aanvaar
   acceptedPasswords: [
     "11092025",
     "11/09/2025",
@@ -24,15 +23,18 @@ const GIFT_CONFIG = {
   // ------------------------------------------
   // 🎵 Musiek Instellings
   // ------------------------------------------
-  // Song: "Karma Police" deur Pierce The Veil
-  // Plaas die klanklêer in assets/ (bv. assets/karma-police.mp3 of assets/our-song.mp3)
+  // Plaaslike MP3: "Pierce The Veil - Karma Police.mp3"
   audioSource: "assets/karma-police.mp3",
-  spotifyUrl: "https://open.spotify.com/track/2GBeNjgz5HSvBkE7dRryxk",
 
   // ------------------------------------------
-  // 🔔 Discord Webhook Instellings
+  // 🔔 Kennisgewings na jou foon (Discord Webhook)
   // ------------------------------------------
-  discordWebhookUrl: "", // Voeg jou Discord Webhook URL hier in om kennisgewings te kry
+  // Plak jou Discord Webhook URL hier in:
+  discordWebhookUrl: "",
+
+  // Opsioneel: Jou Discord Gebruiker ID (bv. "123456789012345678")
+  // As jy dit invul, sal die kennisgewing jou direk @mention sodat jou foon dadelik lui/vibreer!
+  discordUserIdToPing: "",
 
   // ------------------------------------------
   // 💫 Liefdesboodskappe (Rouleer elke 30 sekondes)
