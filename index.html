@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=2" />
 </head>
 <body>
 
@@ -39,7 +39,7 @@
   <div id="heartsContainer" class="hearts-container"></div>
 
   <!-- 1. Password Lock Gate (Privacy Protection) -->
-  <section id="lockScreen" class="lock-screen hidden">
+  <section id="lockScreen" class="lock-screen">
     <div class="lock-card glass-card">
       <div class="lock-icon">
         <i class="fa-solid fa-lock"></i>
@@ -65,7 +65,7 @@
   </section>
 
   <!-- 2. Wax Seal Tap-to-Reveal Entrance (Solves iOS audio restrictions) -->
-  <section id="introScreen" class="intro-screen">
+  <section id="introScreen" class="intro-screen hidden">
     <div class="intro-card glass-card">
       <div class="wax-seal" id="sealBtn" role="button" aria-label="Maak oop">
         <i class="fa-solid fa-heart seal-icon"></i>
@@ -138,7 +138,7 @@
   </main>
 
   <!-- Scripts -->
-  <script src="config.js"></script>
-  <script src="app.js"></script>
+  <script src="config.js?v=2"></script>
+  <script src="app.js?v=2"></script>
 </body>
 </html>
