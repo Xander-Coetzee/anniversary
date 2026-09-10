@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0c16" />
+  <title>Under the Same Sky</title>
+
+  <!-- Google Fonts: Playfair Display & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Starry Background Overlay -->
+  <div class="background-wrapper">
+    <div class="background-image"></div>
+    <div class="background-overlay"></div>
+    <div class="stars-layer" id="starsLayer"></div>
+  </div>
+
+  <!-- Audio Element -->
+  <audio id="bgAudio" preload="auto"></audio>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast hidden">
+    <span id="toastIcon">✨</span>
+    <span id="toastMessage">Message sent!</span>
+  </div>
+
+  <!-- Floating Hearts Container -->
+  <div id="heartsContainer" class="hearts-container"></div>
+
+  <!-- Intro / Tap to Reveal Screen (Ensures audio starts on iOS touch) -->
+  <section id="introScreen" class="intro-screen">
+    <div class="intro-card glass-card">
+      <div class="wax-seal" id="sealBtn" role="button" aria-label="Open Canvas">
+        <i class="fa-solid fa-heart seal-icon"></i>
+      </div>
+      <h1 class="intro-title" id="introTitle">For You</h1>
+      <p class="intro-subtitle" id="introSubtitle">Tap to unlock our canvas</p>
+      <div class="pulse-hint">Tap the seal ✨</div>
+    </div>
+  </section>
+
+  <!-- Main Content (Revealed after tap) -->
+  <main id="mainContent" class="main-content hidden">
+
+    <!-- Header / Banner -->
+    <header class="header glass-card">
+      <div class="badge" id="daysBadge">
+        <i class="fa-solid fa-infinity"></i> <span id="daysCount">--</span> days together
+      </div>
+      <h1 class="title" id="mainTitle">Under the Same Sky</h1>
+      <p class="subtitle" id="mainSubtitle">Every time you scan this canvas, I'm thinking of you.</p>
+    </header>
+
+    <!-- Music Player Card -->
+    <section class="player-card glass-card">
+      <div class="player-header">
+        <span class="section-tag"><i class="fa-solid fa-music"></i> Our Song</span>
+        <a id="spotifyDirectLink" href="#" target="_blank" rel="noopener" class="spotify-badge">
+          <i class="fa-brands fa-spotify"></i> Open Spotify
+        </a>
+      </div>
+
+      <div class="player-body">
+        <div class="vinyl-wrapper" id="vinylWrapper">
+          <div class="vinyl-disc" id="vinylDisc">
+            <div class="vinyl-grooves"></div>
+            <div class="vinyl-label">
+              <i class="fa-solid fa-heart"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="track-details">
+          <h3 class="track-title" id="trackTitle">Our Special Song</h3>
+          <p class="track-artist" id="trackArtist">Loading audio...</p>
+
+          <!-- Audio Progress Bar -->
+          <div class="progress-bar-container" id="progressContainer">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+
+          <div class="time-row">
+            <span id="currentTime">0:00</span>
+            <span id="totalDuration">0:00</span>
+          </div>
+
+          <div class="controls-row">
+            <button id="playPauseBtn" class="control-btn play-btn" aria-label="Play or pause song">
+              <i class="fa-solid fa-play" id="playIcon"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Reverse Webhook Actions ("Thinking of You") -->
+    <section class="actions-card glass-card">
+      <div class="section-tag"><i class="fa-solid fa-signal"></i> Send a Signal</div>
+      <p class="section-desc">Tap a button below to ping Xander's phone instantly!</p>
+
+      <div class="action-buttons-grid">
+        <button class="action-btn hug-btn" id="sendHugBtn">
+          <span class="btn-emoji">🫂</span>
+          <div class="btn-text">
+            <strong>Send a Hug</strong>
+            <small>Buzzes his phone with love</small>
+          </div>
+        </button>
+
+        <button class="action-btn coffee-btn" id="sendCoffeeBtn">
+          <span class="btn-emoji">☕</span>
+          <div class="btn-text">
+            <strong>Coffee Voucher</strong>
+            <small>Redeem a coffee or treat</small>
+          </div>
+        </button>
+
+        <button class="action-btn kiss-btn" id="sendKissBtn">
+          <span class="btn-emoji">💋</span>
+          <div class="btn-text">
+            <strong>Thinking of You</strong>
+            <small>Just saying hello</small>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <!-- "Open When..." Digital Envelopes -->
+    <section class="envelopes-section">
+      <div class="section-tag"><i class="fa-solid fa-envelope"></i> Open When...</div>
+      <p class="section-desc">Choose an envelope whenever you need it:</p>
+
+      <div class="envelopes-grid" id="envelopesGrid">
+        <!-- Dynamically injected from config.js -->
+      </div>
+    </section>
+
+    <!-- "Reasons Why I Love You" Randomizer -->
+    <section class="reasons-card glass-card">
+      <div class="section-tag"><i class="fa-solid fa-jar"></i> Jar of Love</div>
+      <div class="reason-bubble" id="reasonBubble">
+        <p id="reasonText">"Tap the button below to pick a reason from the jar..."</p>
+      </div>
+      <button class="jar-btn" id="nextReasonBtn">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Pull Another Reason
+      </button>
+    </section>
+
+    <!-- Quick Shortcuts / Links -->
+    <section class="links-section" id="linksSection">
+      <div class="section-tag"><i class="fa-solid fa-compass"></i> Our Little Corners</div>
+      <div class="links-grid" id="linksGrid">
+        <!-- Dynamically injected from config.js -->
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Handmade with all my love ❤️</p>
+      <p class="footer-small">Powered by NFC & GitHub Pages</p>
+    </footer>
+
+  </main>
+
+  <!-- Letter Modal -->
+  <div id="letterModal" class="modal-overlay hidden">
+    <div class="modal-dialog glass-card">
+      <button id="closeModalBtn" class="close-modal-btn" aria-label="Close letter">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="modal-header">
+        <span class="modal-emoji" id="modalEmoji">💌</span>
+        <span class="modal-tag" id="modalTag">Open when...</span>
+        <h2 class="modal-title" id="modalTitle">Letter Title</h2>
+      </div>
+      <div class="modal-body">
+        <p id="modalLetterText">Letter content goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <span>Always yours, <strong id="modalSender">Xander</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
