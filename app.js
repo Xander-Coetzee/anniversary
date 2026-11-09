@@ -303,7 +303,16 @@ async function sendPhoneAlert(title, description, tags = "heart", priority = "hi
   }
 
   // 2. Stuur ook na Discord as die webhook ingestel is
-  if (GIFT_CONFIG.discordWebhookUrl && GIFT_CONFIG.discordWebhookUrl.trim() !== "") {
+  let discordUrl = GIFT_CONFIG.discordWebhookUrl || "";
+  if (GIFT_CONFIG.discordWebhookBase64 && GIFT_CONFIG.discordWebhookBase64.trim() !== "") {
+    try {
+      discordUrl = atob(GIFT_CONFIG.discordWebhookBase64.trim());
+    } catch (e) {
+      console.error("Base64 decode error:", e);
+    }
+  }
+
+  if (discordUrl && discordUrl.trim() !== "") {
     const payload = {
       username: "Anniversary Kennisgewing",
       avatar_url: "https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/2764.png",
@@ -322,7 +331,7 @@ async function sendPhoneAlert(title, description, tags = "heart", priority = "hi
     };
 
     try {
-      fetch(GIFT_CONFIG.discordWebhookUrl, {
+      fetch(discordUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
