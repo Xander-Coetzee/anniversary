@@ -26,13 +26,11 @@ const GIFT_CONFIG = {
   audioSource: "assets/karma-police.mp3",
 
   // ------------------------------------------
-  // 🔔 Foon Kennisgewings (ntfy.sh & Discord)
+  // 🔔 Foon Kennisgewings (Cloudflare Relay & ntfy)
   // ------------------------------------------
+  // Jou veilige Cloudflare Worker URL:
+  notifyRelayUrl: "",
   ntfyTopic: "xander-lisa-drukkies",
-
-  // Discord Kennisgewings (Veilig / Geënkodeer om bots te blokkeer)
-  discordWebhookBase64: "",
-  discordUserIdToPing: "",
 
   // ------------------------------------------
   // 💫 Liefdesboodskappe (Rouleer elke 30 sekondes)

@@ -283,7 +283,20 @@ async function sendPhoneAlert(title, description, tags = "heart", priority = "hi
   }
   lastWebhookSent = now;
 
-  // 1. Stuur onmiddellik na jou foon via ntfy.sh
+  // 1. Veilige Cloudflare Relay (Discord Webhook bly 100% geheim)
+  if (GIFT_CONFIG.notifyRelayUrl && GIFT_CONFIG.notifyRelayUrl.trim() !== "") {
+    try {
+      fetch(GIFT_CONFIG.notifyRelayUrl.trim(), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, description, tags })
+      }).catch(err => console.log("Relay error:", err));
+    } catch (e) {
+      console.error("Relay fetch error:", e);
+    }
+  }
+
+  // 2. ntfy.sh Kennisgewings
   if (GIFT_CONFIG.ntfyTopic && GIFT_CONFIG.ntfyTopic.trim() !== "") {
     // Verwyder spasies vir URL geldigheid (vervang met koppeltekens)
     const topic = GIFT_CONFIG.ntfyTopic.trim().replace(/\s+/g, "-");
@@ -299,45 +312,6 @@ async function sendPhoneAlert(title, description, tags = "heart", priority = "hi
       }).catch(err => console.log("ntfy error:", err));
     } catch (e) {
       console.error("ntfy fetch error:", e);
-    }
-  }
-
-  // 2. Stuur ook na Discord as die webhook ingestel is
-  let discordUrl = GIFT_CONFIG.discordWebhookUrl || "";
-  if (GIFT_CONFIG.discordWebhookBase64 && GIFT_CONFIG.discordWebhookBase64.trim() !== "") {
-    try {
-      discordUrl = atob(GIFT_CONFIG.discordWebhookBase64.trim());
-    } catch (e) {
-      console.error("Base64 decode error:", e);
-    }
-  }
-
-  if (discordUrl && discordUrl.trim() !== "") {
-    const payload = {
-      username: "Anniversary Kennisgewing",
-      avatar_url: "https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/2764.png",
-      content: GIFT_CONFIG.discordUserIdToPing ? `<@${GIFT_CONFIG.discordUserIdToPing}>` : undefined,
-      embeds: [
-        {
-          title: title,
-          description: description,
-          color: 16741772, // Roosrooi
-          footer: {
-            text: `Anniversary • ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
-          },
-          timestamp: new Date().toISOString()
-        }
-      ]
-    };
-
-    try {
-      fetch(discordUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      }).catch(err => console.log("Discord error:", err));
-    } catch (err) {
-      console.error("Kon nie Discord webhook stuur nie:", err);
     }
   }
 }
